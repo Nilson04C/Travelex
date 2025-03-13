@@ -1,5 +1,18 @@
 # Ignorar ficheiro de variáveis de ambiente
 .env
+.env.local
 
 # Ignorar dependências do Node.js
 node_modules/
+
+# Ignorar ficheiros de build
+dist/
+build/
+
+# Ignorar ficheiros do editor/IDE
+.vscode/
+.idea/
+
+# Ignorar ficheiros do sistema operacional
+.DS_Store
+Thumbs.db
