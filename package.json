@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Nilson04C/Travelex#readme",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "firebase": "^11.4.0"
   }
 }
