@@ -1,8 +1,8 @@
-import './App.css'
+import './styles/App.css'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomeScree from "./HomeScreen";
-import BuscarViaj from "./buscar_viaj"; 
-import ResultadoViagem from "./result_viaj";
+import HomeScree from "./pages/HomeScreen";
+import BuscarViaj from "./pages/buscar_viaj"; 
+import ResultadoViagem from "./pages/result_viaj";
 
 function App() {
   return (

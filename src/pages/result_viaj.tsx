@@ -1,5 +1,5 @@
 import React from "react";
-import "./resultado_viaj.css"; // Certifique-se de incluir um estilo para formatar os resultados.
+import "../styles/resultado_viaj.css"; // Certifique-se de incluir um estilo para formatar os resultados.
 
 interface Traveler {
   id: number;
