@@ -1,4 +1,4 @@
-import { getUser, getFlight, getOffer, getDelivery, getTransaction, getOffersByRoute } from "./src/firestoreService";
+import { getUser, getFlight, getOffer, getDelivery, getTransaction, getOffersByRoute } from "./src/server/firestoreService";
 
 /* // Testar a função de buscar usuário
 const userId = "YcH8obUMSZYjFuYrhNRc";
@@ -13,7 +13,7 @@ getFlight(flightId).then(() => {
 });
 
 // Testar a função de buscar oferta
-const offerId = "7rU8Yn4UBD6XUe7zV92t";
+const offerId = ["7rU8Yn4UBD6XUe7zV92t"];
 getOffer(offerId).then(() => {
   console.log("Oferta buscada com sucesso!");
 });
@@ -28,8 +28,23 @@ getDelivery(deliveryId).then(() => {
 const transactionId = "wWRNtrPyFUcmUsSckLke";
 getTransaction(transactionId).then(() => {
   console.log("Transação buscada com sucesso!");
-}); */
+}); 
 
 
 // Testar a função de buscar ofertas por rota
-getOffersByRoute("Madrid", "Luanda")
+getOffersByRoute("Madrid", "Luanda")*/
+
+// Testar a função de buscar oferta via API
+fetch(`http://localhost:3000/api/offerbyroute?origin=Madrid&destination=Luanda`)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Erro ao buscar oferta");
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log("Oferta buscada com sucesso!", data);
+  })
+  .catch((error) => {
+    console.error("Erro:", error);
+  });

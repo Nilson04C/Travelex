@@ -126,16 +126,19 @@ export async function setOffer(offerData: Offer) {
   }
 }
 
-export async function getOffer(offerId: string) {
+export async function getOffer(offerId: string[]) {
   try {
-    const docRef = doc(db, 'offer', offerId);
-    const docSnap = await getDoc(docRef);
+    for(var id of offerId)
+    {
+      const docRef = doc(db, 'offer', id);
+      const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      const offerData = docSnap.data() as Offer;
-      console.log('Offer data:', offerData);
-    } else {
-      console.log('No such offer document!');
+      if (docSnap.exists()) {
+        const offerData = docSnap.data() as Offer;
+        console.log('Offer data:', offerData);
+      } else {
+        console.log('No such offer document!');
+      }
     }
   } catch (e) {
     console.error('Error getting offer document: ', e);
@@ -209,6 +212,8 @@ export async function getOffersByRoute(origin: string, destination: string) {
       where("origin", "==", origin),
       where("destination", "==", destination)
     );
+
+    console.log(origin, destination);
 
     const flightDocs = await getDocs(flightQuery);
 

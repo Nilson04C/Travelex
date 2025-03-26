@@ -10,7 +10,7 @@ const TravelSearch: React.FC = () => {
         event.preventDefault();
         console.log(`Buscando viajantes de ${origin} para ${destination}`);
         // Redireciona para o arquivo resultad_viaj
-        navigate('/result_viaj', { state: { origin, destination } });
+        navigate(`/result_viaj?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`);
     };
 
     return (
@@ -27,6 +27,7 @@ const TravelSearch: React.FC = () => {
                         <option value="Portugal">Portugal</option>
                         <option value="Brasil">Brasil</option>
                         <option value="Espanha">Espanha</option>
+                        <option value="Madrid">Madrid</option>
                     </select>
                 </div>
                 <div>
@@ -39,7 +40,9 @@ const TravelSearch: React.FC = () => {
                         <option value="">Selecione o país de Destino</option>
                         <option value="França">França</option>
                         <option value="Alemanha">Alemanha</option>
-                        <option value="Itália">Itália</option>
+                        <option value="Italia">Itália</option>
+                        <option value="Espanha">Espanha</option>
+                        <option value="Luanda">Luanda</option>
                     </select>
                 </div>
                 <button type="submit">Buscar Viajantes</button>
