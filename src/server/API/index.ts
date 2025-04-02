@@ -1,5 +1,5 @@
 import { Router } from "express";
-import offersRoutes from "./firestore/offerbyroute"; // Importa as rotas de "offers"
+import offersRoutes from "./firestore/Getofferbyroute"; // Importa as rotas de "offers"
 // Você pode adicionar mais rotas aqui, como "usersRoutes", etc.
 
 const router = Router();
