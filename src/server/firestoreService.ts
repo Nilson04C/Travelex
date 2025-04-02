@@ -252,3 +252,50 @@ export async function getOffersByRoute(origin: string, destination: string) {
     console.error("Erro ao buscar offers por origin e destination:", e);
   }
 }
+
+export async function getDeliverybyUser(user: string) {
+  try {
+    // Consulta 1: Buscar deliveries onde "client" é igual ao "user"
+    const clientQuery = query(
+      collection(db, "delivery"),
+      where("client", "==", user)
+    );
+
+
+    // Consulta 2: Buscar deliveries onde "traveler" é igual ao "user"
+    const travelerQuery = query(
+      collection(db, "delivery"),
+      where("traveler", "==", user)
+    );
+
+    // Executar ambas as consultas
+    const [clientDocs, travelerDocs] = await Promise.all([
+      getDocs(clientQuery),
+      getDocs(travelerQuery),
+    ]);
+
+    // Combinar os resultados das duas consultas
+    const deliveries = [
+      ...clientDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
+      ...travelerDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
+    ];
+
+    // Verifica se não há entregas encontradas
+    if (deliveries.length === 0) {
+      console.log("Nenhuma entrega encontrada para o usuário especificado.");
+      return;
+    }
+
+    // Remover duplicatas, caso existam
+    const uniqueDeliveries = Array.from(
+      new Map(deliveries.map((delivery) => [delivery.id, delivery])).values()
+    );
+
+
+    //console.log("Deliveries encontradas:", uniqueDeliveries);
+    return uniqueDeliveries;
+  } catch (e) {
+    console.error("Erro ao buscar deliveries por usuário:", e);
+  }
+}
+    

@@ -35,7 +35,7 @@ getTransaction(transactionId).then(() => {
 getOffersByRoute("Madrid", "Luanda")*/
 
 // Testar a função de buscar oferta via API
-fetch(`http://localhost:3000/api/offerbyroute?origin=Madrid&destination=Luanda`)
+/* fetch(`http://localhost:3000/api/offerbyroute?origin=Madrid&destination=Luanda`)
   .then((response) => {
     if (!response.ok) {
       throw new Error("Erro ao buscar oferta");
@@ -44,6 +44,20 @@ fetch(`http://localhost:3000/api/offerbyroute?origin=Madrid&destination=Luanda`)
   })
   .then((data) => {
     console.log("Oferta buscada com sucesso!", data);
+  })
+  .catch((error) => {
+    console.error("Erro:", error);
+  }); */
+
+  fetch(`http://localhost:3000/api/deliverybyuser?user=YcH8obUMSZYjFuYrhNRc`)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Erro ao buscar entrega");
+    }
+    return response.json(); 
+  }) 
+  .then((data) => {
+    console.log("Entrega buscada com sucesso!", data);
   })
   .catch((error) => {
     console.error("Erro:", error);
