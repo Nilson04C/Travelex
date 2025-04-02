@@ -3,13 +3,14 @@ import "../styles/resultado_viaj.css"; // Certifique-se de incluir um estilo par
 import { useSearchParams } from "react-router-dom";
 
 
-
-
-interface Traveler {
-  id: number;
-  name: string;
-  origin: string;
-  destination: string;
+interface Offer {
+  id: string;
+  flight: string;
+  user: string;
+  user_name: string;
+  weight: number;
+  space: string;
+  a_date: string;
 }
 
 const ResultadoViaj: React.FC = () => {
@@ -17,6 +18,8 @@ const ResultadoViaj: React.FC = () => {
   const [searchParams] = useSearchParams();
   const origin = searchParams.get('origin');
   const destination = searchParams.get('destination');
+
+  const [offers, setOffers] = useState<Offer[]>([]); // Estado para armazenar as ofertas
   const [loading, setLoading] = useState<boolean>(true);
 
 
@@ -24,7 +27,7 @@ const ResultadoViaj: React.FC = () => {
 
     if (!origin || !destination) return;
 
-    const fetchTravelers = async () => {
+    const fetchOffers = async () => {
       try {
         setLoading(true);
         const response = await fetch(
@@ -35,6 +38,7 @@ const ResultadoViaj: React.FC = () => {
         }
 
         const data = await response.json();
+        setOffers(data); // Atualiza o estado com as ofertas retornadas pela API
 
       } catch (err) {
         console.error(err);
@@ -43,25 +47,24 @@ const ResultadoViaj: React.FC = () => {
         setLoading(false);
       }
     };
-    fetchTravelers();
+    fetchOffers();
   }, [origin, destination]);
 
-  // Supondo que você tenha os resultados buscados
-  const travelers: Traveler[] = [
-    { id: 1, name: "João Silva", origin: "Portugal", destination: "França" },
-    { id: 2, name: "Maria Oliveira", origin: "Brasil", destination: "Alemanha" },
-    { id: 3, name: "Carlos Santos", origin: "Espanha", destination: "Itália" },
-  ];
+
+  if(loading) {
+    return <div className="loading">Carregando...</div>;
+  }
 
   return (
     <div className="resultado-viaj-container">
-      <h1>Viajantes Encontrados</h1>
+      <h1>Ofertas Encontradas</h1>
       <ul className="traveler-list">
-        {travelers.map((traveler) => (
-          <li key={traveler.id} className="traveler-item">
-            <p><strong>Nome:</strong> {traveler.name}</p>
-            <p><strong>De:</strong> {traveler.origin}</p>
-            <p><strong>Para:</strong> {traveler.destination}</p>
+        {offers.map((offer) => (
+          <li key={offer.id} className="traveler-item">
+            <p><strong>chegada:</strong> {offer.a_date}</p>
+            <p><strong>Entregador</strong> {offer.user_name}</p>
+            <p><strong>Peso Máximo:</strong> {offer.weight} kg</p>
+            <p><strong>Espaço máximo:</strong> {offer.space}</p>
           </li>
         ))}
       </ul>

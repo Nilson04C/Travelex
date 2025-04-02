@@ -35,10 +35,13 @@ interface Flight {
 }
 
 interface Offer {
+  id: string;
   flight: string;
   user: string;
-  wheight: number;
+  user_name: string;
+  weight: number;
   space: string;
+  a_date: string;
 }
 
 interface Delivery {
