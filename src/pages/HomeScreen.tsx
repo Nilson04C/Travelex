@@ -18,7 +18,7 @@ export default function HomeScreen() {
         <div className="mt-6 space-y-4">
           <button
             className="w-full flex items-center justify-center bg-black text-white px-4 py-2 rounded-xl shadow hover:opacity-80"
-          >
+            onClick={() => navigate("/registarOfertas")} >
             <FaPlane className="mr-2" /> Levar Encomenda
           </button>
 

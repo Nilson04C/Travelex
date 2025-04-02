@@ -49,7 +49,7 @@ getOffersByRoute("Madrid", "Luanda")*/
     console.error("Erro:", error);
   }); */
 
-  fetch(`http://localhost:3000/api/deliverybyuser?user=YcH8obUMSZYjFuYrhNRc`)
+/*   fetch(`http://localhost:3000/api/deliverybyuser?user=YcH8obUMSZYjFuYrhNRc`)
   .then((response) => {
     if (!response.ok) {
       throw new Error("Erro ao buscar entrega");
@@ -61,4 +61,29 @@ getOffersByRoute("Madrid", "Luanda")*/
   })
   .catch((error) => {
     console.error("Erro:", error);
-  });
+  }); */
+
+  fetch('http://localhost:3000/api/setOffer', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      flight: "AB123",
+      weight: 10,
+      space: "large",
+      date: "2025-04-02",
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Erro ao criar oferta");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Oferta criada com sucesso!", data);
+    })
+    .catch((error) => {
+      console.error("Erro:", error);
+    });
