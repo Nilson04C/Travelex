@@ -1,9 +1,23 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, query, where, getDocs  } from 'firebase/firestore';
+import admin from "firebase-admin";
+import serviceAccountJson from "./travelex-aedc8-firebase-adminsdk-fbsvc-50fadc7c38.json";
+import { ServiceAccount } from "firebase-admin";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Configuração do Firebase (substitua pelas suas credenciais)
+const serviceAccount = serviceAccountJson as ServiceAccount;
+
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
+
+const auth = admin.auth();
+
+// Configuração do Firebase
 const firebaseConfig = {
   apiKey: process.env.apiKey,
   authDomain: process.env.authDomain,
@@ -62,13 +76,32 @@ interface Transaction {
 
 
 // Função para adicionar ou atualizar um documento
-export async function setUser(userData: User) {
+export async function setUser(userData: User, uid: string) {
   try {
-    const docRef = collection(db, "user")
-    await addDoc(docRef, userData);
-    console.log('User data set successfully');
+    // Define a referência ao documento com o ID do usuário (uid)
+    const docRef = doc(db, "user", uid);
+
+    // Usa setDoc para salvar os dados do usuário no Firestore
+    await setDoc(docRef, userData);
+    console.log("User data set successfully with UID:", uid);
   } catch (e) {
-    console.error('Error setting document: ', e);
+    console.error("Error setting document: ", e);
+    throw new Error("Erro ao salvar os dados do usuário no Firestore.");
+  }
+}
+
+
+export async function addUser(email: string, password: string) {
+  try { 
+    const userRecord = await auth.createUser({
+      email,
+      password,
+    });
+    console.log("Usuário criado no Firebase Auth:", userRecord.uid);
+    return String(userRecord.uid);
+  }
+  catch (e) {
+    console.error('Error updating document: ', e);
   }
 }
 

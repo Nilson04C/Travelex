@@ -5,6 +5,7 @@ import BuscarViaj from "./pages/buscar_viaj";
 import ResultadoViagem from "./pages/result_viaj";
 import RegistarOferta from "./pages/registarOferta";
 import LoginScreen from './pages/login';
+import Registeruser from './pages/registarUser';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/buscar_viaj" element={<BuscarViaj/>} />
         <Route path="/result_viaj" element={<ResultadoViagem />} />
         <Route path="/registarOfertas" element={<RegistarOferta />} />
+        <Route path="/register" element={<Registeruser />} />
       </Routes>
     </Router>
   );

@@ -30,3 +30,6 @@ dist-ssr
 *.sln
 *.sw?
 Thumbs.db
+
+
+server/travelex-aedc8-firebase-adminsdk-fbsvc-50fadc7c38.json
