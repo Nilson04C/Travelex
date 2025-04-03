@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "src/server/firestoreService.ts"]
+  "include": ["src", "server/firestoreService.ts"]
 }

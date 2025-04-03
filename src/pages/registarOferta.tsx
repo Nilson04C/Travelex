@@ -8,8 +8,16 @@ const addOferta: React.FC = () => {
     const [date, setDate] = useState<string>('');
     const navigate = useNavigate();
 
+    // Função para ir buscar os dados do voo usando a API
+    //const getFlightData = async (flightNumber: string) => {}
+    //    const response = await fetch(`http://localhost:3000/api/getFlightData?flightNumber=${flightNumber}`); 
+
     const setOffer = async (event: React.FormEvent) => {
         event.preventDefault();
+
+        //chamar a funcção getFlightData aqui para buscar os dados do voo
+        //const flightData = await getFlightData(flightNumber);
+
         const offerData = {
             flight: "fligtid teste",
             weight,

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@server": "/src/server", // Alias para o código do servidor
+      "@server": "/server", // Alias para o código do servidor
     },
   },
   build: {

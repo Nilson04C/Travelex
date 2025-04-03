@@ -4,12 +4,13 @@ import HomeScreen from "./pages/HomeScreen";
 import BuscarViaj from "./pages/buscar_viaj"; 
 import ResultadoViagem from "./pages/result_viaj";
 import RegistarOferta from "./pages/registarOferta";
+import LoginScreen from './pages/login';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomeScreen />} />
+        <Route path="/" element={<LoginScreen />} />
         <Route path="/buscar_viaj" element={<BuscarViaj/>} />
         <Route path="/result_viaj" element={<ResultadoViagem />} />
         <Route path="/registarOfertas" element={<RegistarOferta />} />

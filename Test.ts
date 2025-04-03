@@ -1,4 +1,4 @@
-import { getUser, getFlight, getOffer, getDelivery, getTransaction, getOffersByRoute } from "./src/server/firestoreService";
+import { getUser, getFlight, getOffer, getDelivery, getTransaction, getOffersByRoute } from "./server/firestoreService";
 
 /* // Testar a função de buscar usuário
 const userId = "YcH8obUMSZYjFuYrhNRc";

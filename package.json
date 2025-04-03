@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev:server": "tsx src/server/config.ts",
+    "dev:server": "tsx server/config.ts",
     "test:run": "tsx Test.ts"
   },
   "repository": {
