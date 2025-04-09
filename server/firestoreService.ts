@@ -4,6 +4,7 @@ import admin from "firebase-admin";
 import serviceAccountJson from "./travelex-aedc8-firebase-adminsdk-fbsvc-50fadc7c38.json";
 import { ServiceAccount } from "firebase-admin";
 import dotenv from "dotenv";
+import axios from "axios";
 dotenv.config();
 
 const serviceAccount = serviceAccountJson as ServiceAccount;
@@ -27,6 +28,8 @@ const firebaseConfig = {
   appId: process.env.appId,
   measurementId: process.env.measurementId
 };
+
+const FIREBASE_API_KEY = process.env.apiKey;
 
 // Inicializar o Firebase
 const app = initializeApp(firebaseConfig);
@@ -330,4 +333,32 @@ export async function getDeliverybyUser(user: string) {
     console.error("Erro ao buscar deliveries por usuário:", e);
   }
 }
-    
+
+
+
+export async function authenticateUser(email: string, password: string): Promise<string> {
+  try {
+    // Verificar a senha usando a Firebase Authentication REST API
+    await axios.post(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`,
+      {
+        email,
+        password,
+        returnSecureToken: true,
+      }
+    );
+
+    const user = await admin.auth().getUserByEmail(email);
+    const token = await admin.auth().createCustomToken(user.uid);
+
+    return token;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Erro ao autenticar usuário:", (error as any).response?.data || error.message);
+    } else {
+      console.error("Erro ao autenticar usuário:", error);
+    }
+    throw new Error("Credenciais inválidas.");
+  }
+}
+

@@ -3,6 +3,7 @@ import offersRoutes from "./firestore/Getofferbyroute"; // Importa as rotas de "
 import deliveryRoutes from "./firestore/Getdeliverybyuser"; // Importa as rotas de "delivery"
 import setOffer from "./firestore/setOffer"; // Importa as rotas de "setOffer"
 import registerUser from "./firestore/setUser"; // Importa as rotas de "register"
+import loginRoutes from "./firestore/login"; // Importa as rotas de "login"
 // Você pode adicionar mais rotas aqui, como "usersRoutes", etc.
 
 const router = Router();
@@ -15,6 +16,8 @@ router.use("/api", deliveryRoutes);
 router.use("/api", setOffer);
 // Use as rotas de "register"
 router.use("/api", registerUser);
+// Use as rotas de "login"
+router.use("/api", loginRoutes);
 
 // Adicione outras rotas aqui, se necessário
 // router.use("/api/users", usersRoutes);
