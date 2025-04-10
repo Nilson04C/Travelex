@@ -16,8 +16,18 @@ export default function LoginScreen() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/login", formData);
-      console.log("Login bem-sucedido:", response.data);
+      const response = await axios.post<{ token: string }>("http://localhost:3000/api/login", formData);
+
+      // Verifica se o token foi recebido
+      const { token } = response.data;
+      if (!token) {
+        throw new Error("Token não recebido.");
+      }
+
+      // Armazena o token no localStorage
+      localStorage.setItem("token", token);
+
+      console.log("Login bem-sucedido. Token armazenado:", token);
       navigate("/"); // Redireciona para o dashboard após login bem-sucedido
     } catch (err) {
       console.error("Erro ao fazer login:", err);

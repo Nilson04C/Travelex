@@ -109,19 +109,22 @@ export async function addUser(email: string, password: string) {
 }
 
 // Função para ler um documento
-export async function getUser(userId: string) {
+export async function getUser(userId: string): Promise<User | null> {
   try {
-    const docRef = doc(db, 'user', userId);    //buscar na coleção "user" o documento userid
+    const docRef = doc(db, "user", userId); // Buscar na coleção "user" o documento userId
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const userData = docSnap.data() as User; //guardar as informações no tipo User
-      console.log('User data:', userData);
+      const userData = docSnap.data() as User; // Guardar as informações no tipo User
+      console.log("User data:", userData);
+      return userData;
     } else {
-      console.log('No such document!');
+      console.log("No such document!");
+      return null;
     }
   } catch (e) {
-    console.error('Error getting document: ', e);
+    console.error("Error getting document: ", e);
+    throw new Error("Erro ao buscar os dados do usuário.");
   }
 }
 
@@ -153,7 +156,7 @@ export async function getFlight(flightId: string) {
 }
 
 
-// Função para adicionar ou atualizar um documento para a interface Offer
+// Função para adicionar um documento para a interface Offer
 export async function setOffer(offerData: Offer) {
   try {
     const docRef = collection(db, "offer");
@@ -338,27 +341,41 @@ export async function getDeliverybyUser(user: string) {
 
 export async function authenticateUser(email: string, password: string): Promise<string> {
   try {
-    // Verificar a senha usando a Firebase Authentication REST API
-    await axios.post(
+    // Autentica o usuário usando a Firebase Authentication REST API
+    interface AuthResponse {
+      idToken: string;
+      refreshToken: string;
+      expiresIn: string;
+      localId: string;
+    }
+
+    const response = await axios.post<AuthResponse>(
       `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`,
       {
         email,
         password,
-        returnSecureToken: true,
+        returnSecureToken: true, // Garante que o ID Token seja retornado
       }
     );
 
-    const user = await admin.auth().getUserByEmail(email);
-    const token = await admin.auth().createCustomToken(user.uid);
+    const idToken = response.data.idToken; // Obtém o ID Token da resposta
+    console.log("ID Token gerado com sucesso:", idToken);
 
-    return token;
+    return idToken; // Retorna o ID Token
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Erro ao autenticar usuário:", (error as any).response?.data || error.message);
-    } else {
-      console.error("Erro ao autenticar usuário:", error);
-    }
+    console.error("Erro ao autenticar usuário:", error);
     throw new Error("Credenciais inválidas.");
+  }
+}
+
+export async function verifyToken(token: string): Promise<string> {
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    console.log("Token verificado com sucesso:", decodedToken);
+    return decodedToken.uid; // Retorna o UID do usuário
+  } catch (error) {
+    console.error("Erro ao verificar token:", error);
+    throw new Error("Token inválido.");
   }
 }
 
