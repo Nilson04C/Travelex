@@ -11,7 +11,7 @@ const AddOferta: React.FC = () => {
     const [errorDetails, setErrorDetails] = useState<string | null>(null); // Armazena erros
     const navigate = useNavigate();
 
-    const API_KEY = 'cd70dccf670d9d357718feaba8e66c4e'; // Substitua com sua chave de API
+    const API_KEY = 'cd70dccf670d9d357718feaba8e66c4e'; // Dá para chamar a api 100 vezes por mês com esse plano gratuito.
 
     useEffect(() => {
         const validateToken = async () => {
