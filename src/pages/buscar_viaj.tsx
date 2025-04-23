@@ -24,8 +24,8 @@ const TravelSearch: React.FC = () => {
                         onChange={(e) => setOrigin(e.target.value)}
                     >
                         <option value="">Selecione o país de Origem</option>
-                        <option value="Portugal">Portugal</option>
-                        <option value="Brasil">Brasil</option>
+                        <option value="LIS">Lisboa</option>
+                        <option value="ORY">Paris</option>
                         <option value="Espanha">Espanha</option>
                         <option value="Madrid">Madrid</option>
                     </select>
@@ -38,7 +38,7 @@ const TravelSearch: React.FC = () => {
                         onChange={(e) => setDestination(e.target.value)}
                     >
                         <option value="">Selecione o país de Destino</option>
-                        <option value="França">França</option>
+                        <option value="ORY">Paris</option>
                         <option value="Alemanha">Alemanha</option>
                         <option value="Italia">Itália</option>
                         <option value="Espanha">Espanha</option>

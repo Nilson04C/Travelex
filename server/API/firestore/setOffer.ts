@@ -20,17 +20,27 @@ router.post("/setOffer", async (req, res) => {
       return res.status(404).json({ error: "Usuário não encontrado." });
     }
 
-    const { flight, weight, space, date } = req.body; // Dados da oferta
+
+
+    const { flightNumber, weight, space, origin, destination, departureDate, arrivalDate } = req.body; // Dados da oferta
     const offerData = {
-      flight,
+      flight: "",
       user: uid, // Usa o UID do usuário autenticado
       user_name: userData.name, // Usa o nome do usuário
       weight,
       space,
-      date,
     };
 
-    const offer = await setOffer(offerData);
+    const flightData = {
+      flightNumber,
+      origin,
+      destination,
+      departureDate,
+      arrivalDate,
+    };
+
+
+    const offer = await setOffer(offerData, flightData);
     res.status(201).json({ message: "Oferta criada com sucesso!", offer });
   } catch (error) {
     console.error("Erro ao criar oferta:", error);

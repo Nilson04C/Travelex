@@ -44,11 +44,11 @@ interface User {
 }
 
 interface Flight {
-  number: string;
-  a_date: Date;
-  d_date: Date;
+  flightNumber: string;
+  arrivalDate: Date;
+  departureDate: Date;
   origin: string;
-  destiny: string;
+  destination: string;
 }
 
 interface Offer {
@@ -57,7 +57,6 @@ interface Offer {
   user_name: string;
   weight: number;
   space: string;
-  date: string;
 }
 
 interface Delivery {
@@ -129,13 +128,15 @@ export async function getUser(userId: string): Promise<User | null> {
 }
 
 // Função para adicionar ou atualizar um documento para a interface Flight
-export async function setFlight(flightData: Flight) {
+export async function setFlight(flightData: Flight): Promise<string> {
   try {
     const docRef = collection(db, "flight");
-    await addDoc(docRef, flightData);
+    const doc = await addDoc(docRef, flightData);
     console.log('Flight data set successfully');
+    return doc.id; // Retorna o ID do documento criado
   } catch (e) {
     console.error('Error setting flight document: ', e);
+    throw new Error('Erro ao salvar os dados do voo no Firestore.');
   }
 }
 
@@ -157,8 +158,35 @@ export async function getFlight(flightId: string) {
 
 
 // Função para adicionar um documento para a interface Offer
-export async function setOffer(offerData: Offer) {
+export async function setOffer(offerData: Offer, flightData: Flight) {
   try {
+
+    // Verificar se já existe um voo com o mesmo número e data de partida
+    const flightQuery = query(
+      collection(db, "flight"),
+      where("flightNumber", "==", flightData.flightNumber),
+      where("departureDate", "==", flightData.departureDate)
+    );
+
+    const flightDocs = await getDocs(flightQuery);
+
+    let flightId: string;
+
+    if (!flightDocs.empty) {
+      // Se o voo já existe, pega a chave do documento
+      flightId = flightDocs.docs[0].id;
+      console.log(`Voo encontrado com ID: ${flightId}`);
+    } else {
+      // Caso contrário, cria um novo voo
+      flightId = await setFlight(flightData);
+      console.log(`Novo voo criado com ID: ${flightId}`);
+    }
+
+    // Atribuir a chave do voo ao campo flight do offerData
+    offerData.flight = flightId;
+    
+    // Criar o documento da oferta
+    //console.log(offerData);
     const docRef = collection(db, "offer");
     await addDoc(docRef, offerData);
     console.log('Offer data set successfully');

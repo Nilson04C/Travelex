@@ -11,7 +11,6 @@ const AddOferta: React.FC = () => {
     const [errorDetails, setErrorDetails] = useState<string | null>(null); // Armazena erros
     const navigate = useNavigate();
 
-    const API_KEY = 'cd70dccf670d9d357718feaba8e66c4e'; // Dá para chamar a api 100 vezes por mês com esse plano gratuito.
 
     useEffect(() => {
         const validateToken = async () => {
@@ -37,41 +36,69 @@ const AddOferta: React.FC = () => {
 
         validateToken();
     }, [navigate]);
+    
 
-    const fetchFlightDetails = async () => {
-        setErrorDetails(null); // Reseta os erros antes da busca
-        setFlightDetails(null); // Reseta os detalhes do voo antes da busca
+const fetchFlightDetails = async () => {
+    setErrorDetails(null); // Reseta os erros antes da busca
+    setFlightDetails(null); // Reseta os detalhes do voo antes da busca
 
-        const url = `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&flight_iata=${flightNumber}`;
-        try {
-            const response = await axios.get(url);
-            const flights = (response.data as { data: any[] }).data;
+    const token = localStorage.getItem('token'); // Obtém o token do localStorage
+    if (!token) {
+        console.error('Token não encontrado. Redirecionando para login.');
+        navigate('/login'); // Redireciona para login se o token não existir
+        return;
+    }
 
-            // Filtra o voo pela data fornecida
-            const matchingFlight = flights.find(
-                (flight) => flight.flight_date === date
-            );
 
-            if (matchingFlight) {
-                setFlightDetails({
-                    airline: matchingFlight.airline?.name || 'Desconhecido',
-                    origin: {
-                        airport: matchingFlight.departure?.airport || 'Desconhecido',
-                        timezone: matchingFlight.departure?.timezone || 'Timezone desconhecido',
-                    },
-                    destination: {
-                        airport: matchingFlight.arrival?.airport || 'Desconhecido',
-                        timezone: matchingFlight.arrival?.timezone || 'Timezone desconhecido',
-                    },
-                });
-            } else {
-                setErrorDetails('Voo não encontrado na data especificada.');
-            }
-        } catch (error: any) {
-            console.error('Erro ao buscar voo:', error);
-            setErrorDetails('Erro ao buscar voo. Verifique a conexão ou os parâmetros fornecidos.');
+    // Separar os caracteres (código da companhia) dos números (número do voo)
+    const match = flightNumber.match(/^([A-Za-z]+)(\d+)$/);
+    if (!match) {
+        setErrorDetails('Número do voo inválido. Certifique-se de que está no formato correto (ex: FR1234).');
+        return;
+    }
+    const codigo = match[1]; // Parte com os caracteres (código da companhia)
+    const numero = match[2]; // Parte com os números (número do voo)
+
+
+
+    interface FlightData {
+        departureAirportIATA: string;
+        arrivalAirportIATA: string;
+        departureDateUTC: string;
+        arrivalDateUTC: string;
+    }
+
+    const url = `http://localhost:3000/api/getflightdata?data=${date}&numero=${numero}&codigoCompanhia=${codigo}`; // Substitua "FR" pelo código da companhia aérea, se necessário
+
+    try {
+        const response = await axios.get<FlightData>(url, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Adiciona o token no cabeçalho
+            },
+        });
+
+        const flightData = response.data;
+        console.log('Dados do voo:', flightData); // Imprime os dados do voo no console para depuração
+
+        if (flightData) {
+            setFlightDetails({
+                origin: {
+                    airport: flightData.departureAirportIATA || 'Desconhecido',
+                    dateUTC: flightData.departureDateUTC || 'Desconhecido',
+                },
+                destination: {
+                    airport: flightData.arrivalAirportIATA || 'Desconhecido',
+                    dateUTC: flightData.arrivalDateUTC || 'Desconhecido',
+                },
+            });
+        } else {
+            setErrorDetails('Voo não encontrado na data especificada.');
         }
-    };
+    } catch (error: any) {
+        console.error('Erro ao buscar voo:', error);
+        setErrorDetails('Erro ao buscar voo. Verifique a conexão ou os parâmetros fornecidos.');
+    }
+};
 
     const setOffer = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -82,9 +109,9 @@ const AddOferta: React.FC = () => {
             navigate('/login'); // Redireciona para login se o token não existir
             return;
         }
-
         // Verifica os detalhes do voo antes de criar a oferta
         await fetchFlightDetails();
+        
         if (!flightDetails) {
             console.error('Detalhes do voo não encontrados. Não foi possível criar a oferta.');
             return;
@@ -92,15 +119,17 @@ const AddOferta: React.FC = () => {
 
         const offerData = {
             flightNumber,
-            airline: flightDetails.airline,
-            origin: flightDetails.origin,
-            destination: flightDetails.destination,
+            origin: flightDetails.origin.airport,
+            destination: flightDetails.destination.airport,
+            departureDate: flightDetails.origin.dateUTC,
+            arrivalDate: flightDetails.destination.dateUTC,
             weight,
             space,
-            date,
         };
 
         try {
+            //imprimir "entrei"
+            console.log('Dados da oferta:', offerData);
             // Envia os dados para a API com o token no cabeçalho Authorization
             const response = await axios.post('http://localhost:3000/api/setOffer', offerData, {
                 headers: {
