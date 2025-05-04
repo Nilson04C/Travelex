@@ -6,6 +6,7 @@ import ResultadoViagem from "./pages/result_viaj";
 import RegistarOferta from "./pages/registarOferta";
 import LoginScreen from './pages/login';
 import Registeruser from './pages/registarUser';
+import MinhasEncomendas from "./pages/MinhasEncomendas";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/registarOfertas" element={<RegistarOferta />} />
         <Route path="/register" element={<Registeruser />} />
         <Route path="/login" element={<LoginScreen />} />
+        <Route path="/minhas_encomendas" element={<MinhasEncomendas />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,158 @@
+:root {
+    /* Ajusta aqui a largura máxima do container principal (use '100%' para largura total) */
+    --container-max-width: 1200px;
+  }
+  
+  /* Reset global e box-sizing */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html, body, #root {
+    margin: 0;
+    padding: 0; 
+    width: 100%; /* ocupa toda a largura da tela */
+    overflow-x: hidden; /* Evita overflow horizontal */
+  }
+  
+  /* Container principal da página — padding lateral para espaçamento */
+  .travel-list-page {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+  
+    display: flex;
+    flex-direction: column;
+     /* espaço nas laterais da viewport */
+  }
+  
+  /* Header destacado em largura total */
+  .travel-list-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px; /* só padding vertical — horizontais ficam no pai */
+    background-color: #e0e0e0;
+    border-bottom: 1px solid #ccc;
+  }
+  .travel-list-logo {
+    height: 50px;
+  }
+  .travel-list-user-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  /* Wrapper transparente e centralizado */
+  .travel-list-body {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin: 24px auto 0 auto;
+    background: transparent;
+    
+  }
+  
+  /* Conteúdo principal que preenche o container */
+  .travel-list-content {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem linha */
+    gap: 24px;
+    align-items: stretch;
+  }
+  
+  /* Estilos gerais de cada cartão */
+  .travel-item {
+    width: calc(33.33% - 16px); /* Ajusta a largura para evitar overflow */
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 24px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    min-height: 120px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .travel-item:hover {
+    background-color: #fafafa;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  .travel-item-header .route {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  
+  /* Sumário colapsado */
+  .travel-item-summary .summary-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .departure-date, .weight {
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  /* Detalhes expandidos */
+  .travel-item-details .user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .user-icon {
+    width: 24px;
+    height: 24px;
+  }
+  .user-name {
+    font-size: 14px;
+  }
+  .dates div {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .details {
+    margin: 16px 0;
+    display: flex;
+    gap: 8px;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+  }
+  .badge {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .size-badge {
+    background-color: #d0e3ff;
+    color: #1e3a8a;
+  }
+  .weight-badge {
+    background-color: #dfffd0;
+    color: #006400;
+  }
+  .disponibilidade-badge {
+    background-color: #cfe8ff;
+    color: #004080;
+  }
+  
+  .select-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .travel-item-details[aria-expanded="false"] {
+  }
+  .travel-item-summary[aria-expanded="true"] {
+    display: none;
+  }
+

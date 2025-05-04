@@ -26,6 +26,11 @@ export default function HomeScreen() {
             onClick={() => navigate("/buscar_viaj")} >
             <FaBox className="mr-2" /> Receber Encomenda
           </button>
+
+          <button className="w-full flex items-center justify-center bg-gray-200 text-black px-4 py-2 rounded-xl shadow hover:bg-gray-300"  
+            onClick={() => navigate("/minhas_encomendas")} >
+            <FaBox className="mr-2" /> Minhas encomendas
+          </button>
         </div>
       </div>
     </div>
