@@ -52,6 +52,7 @@ interface Flight {
 }
 
 interface Offer {
+  id: string;
   flight: string;
   user: string;
   user_name: string;
@@ -60,6 +61,7 @@ interface Offer {
 }
 
 interface Delivery {
+  offer: string;
   client: number;
   traveler: number;
   content: string;
@@ -147,7 +149,7 @@ export async function getFlight(flightId: string) {
 
     if (docSnap.exists()) {
       const flightData = docSnap.data() as Flight;
-      console.log('Flight data:', flightData);
+      return flightData; // Retorna os dados do voo
     } else {
       console.log('No such flight document!');
     }
@@ -204,7 +206,7 @@ export async function getOffer(offerId: string[]) {
 
       if (docSnap.exists()) {
         const offerData = docSnap.data() as Offer;
-        console.log('Offer data:', offerData);
+        return offerData; // Retorna os dados da oferta
       } else {
         console.log('No such offer document!');
       }
@@ -321,12 +323,12 @@ export async function getOffersByRoute(origin: string, destination: string) {
 
 export async function getDeliverybyUser(user: string) {
   try {
+    // Verifica se o usuário está autenticado
     // Consulta 1: Buscar deliveries onde "client" é igual ao "user"
     const clientQuery = query(
       collection(db, "delivery"),
       where("client", "==", user)
     );
-
 
     // Consulta 2: Buscar deliveries onde "traveler" é igual ao "user"
     const travelerQuery = query(
@@ -342,26 +344,19 @@ export async function getDeliverybyUser(user: string) {
 
     // Combinar os resultados das duas consultas
     const deliveries = [
-      ...clientDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
-      ...travelerDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
+      ...clientDocs.docs.map((doc) => ({ id: doc.id, ...(doc.data() as Delivery) })),
+      ...travelerDocs.docs.map((doc) => ({ id: doc.id, ...(doc.data() as Delivery) })),
     ];
-
-    // Verifica se não há entregas encontradas
-    if (deliveries.length === 0) {
-      console.log("Nenhuma entrega encontrada para o usuário especificado.");
-      return;
-    }
 
     // Remover duplicatas, caso existam
     const uniqueDeliveries = Array.from(
       new Map(deliveries.map((delivery) => [delivery.id, delivery])).values()
     );
 
-
-    //console.log("Deliveries encontradas:", uniqueDeliveries);
-    return uniqueDeliveries;
+    return uniqueDeliveries; // Retorna as entregas únicas
   } catch (e) {
     console.error("Erro ao buscar deliveries por usuário:", e);
+    throw new Error("Erro ao buscar deliveries por usuário.");
   }
 }
 

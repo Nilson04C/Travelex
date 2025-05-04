@@ -19,7 +19,7 @@ const TravelItem: React.FC<TravelItemProps> = ({ item, userIconSrc }) => {
     >
       <div className="travel-item-header">
         <div className="route">
-          {item.origem} → {item.destino}
+          {item.origin} → {item.destination}
         </div>
       </div>
 
@@ -27,8 +27,8 @@ const TravelItem: React.FC<TravelItemProps> = ({ item, userIconSrc }) => {
       {!isOpen && (
         <div className="travel-item-summary">
           <div className="summary-info">
-            <span className="departure-date">Data de partida: {item.partida}</span> 
-            <span className={`badge weight-badge weight-${item.peso.replace(/[^0-9]/g, '')}`}>Peso: {item.peso}</span>
+            <span className="departure-date">Data de partida: {item.departureDate}</span> 
+            <span className="badge weight-badge weight">Peso: {item.space}</span>
           </div>
         </div>
       )}
@@ -38,17 +38,17 @@ const TravelItem: React.FC<TravelItemProps> = ({ item, userIconSrc }) => {
         <div className="travel-item-details">
           <div className="user-info">
             <img src={userIconSrc} alt="Usuário" className="user-icon" />
-            <span className="user-name">{item.nome}</span>
+            <span className="user-name">{item.client}</span>
           </div>
 
           <div className="dates">
-            <div>Data de partida: {item.partida}</div>
-            <div>Data de chegada: {item.chegada}</div>
+            <div>Data de partida: {item.departureDate}</div>
+            <div>Data de chegada: {item.arrivalDate}</div>
           </div>
 
           <div className="details">
-            <span className={`badge size-badge size-${item.tamanho.toLowerCase()}`}>{item.tamanho}</span>
-            <span className={`badge weight-badge weight-${item.peso.replace(/[^0-9]/g, '')}`}>{item.peso}</span>
+            <span className={`badge size-badge size-${item.space.toLowerCase()}`}>{item.space}</span>
+            <span className="badge weight-badge weight">{item.weight} g </span>
             {item.disponibilidade && (
               <span className="badge disponibilidade-badge">{item.disponibilidade}</span>
             )}

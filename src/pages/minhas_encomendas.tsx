@@ -6,13 +6,13 @@ import '../styles/TravelList.css';
 // Definição do tipo de cada item de viagem
 export interface TravelData {
   id: string;
-  origem: string;
-  destino: string;
-  nome: string;
-  partida?: string;
-  chegada?: string;
-  tamanho: string;
-  peso: string;
+  origin: string;
+  destination: string;
+  client: string;
+  departureDate?: string;
+  arrivalDate?: string;
+  space: string;
+  weight: string;
   disponibilidade?: string;
 }
 
@@ -33,16 +33,19 @@ const TravelListPage: React.FC<TravelListPageProps> = ({ data, userIconSrc }) =>
         <img src={logoSrc} alt="Logo da aplicação" className="travel-list-logo" />
         <img src={userIconSrc} alt="Ícone do usuário" className="travel-list-user-icon" />
       </header>
-      {/* Container centralizado da lista - ajusta a largura máxima abaixo conforme desejado */}
       <div className="travel-list-body">
         <main className="travel-list-content">
-          {data.map(item => (
-            <TravelItem
-              key={item.id}
-              item={item}
-              userIconSrc={userIconSrc}
-            />
-          ))}
+          {Array.isArray(data) ? (
+            data.map(item => (
+              <TravelItem
+                key={item.id}
+                item={item}
+                userIconSrc={userIconSrc}
+              />
+            ))
+          ) : (
+            <p>Nenhum dado disponível.</p>
+          )}
         </main>
       </div>
     </div>
