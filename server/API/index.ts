@@ -5,6 +5,7 @@ import setOffer from "./firestore/setOffer"; // Importa as rotas de "setOffer"
 import registerUser from "./firestore/setUser"; // Importa as rotas de "register"
 import loginRoutes from "./firestore/login"; // Importa as rotas de "login"
 import flights from "./Flights/rapidapi"; // Importa as rotas de "flights"
+import Stripe from "./payment/stripe";    // Importa a biblioteca Stripe para pagamentos
 // Você pode adicionar mais rotas aqui, como "usersRoutes", etc.
 
 const router = Router();
@@ -21,6 +22,8 @@ router.use("/api", registerUser);
 router.use("/api", loginRoutes);
 // Use as rotas de "flights"
 router.use("/api", flights);
+// Use as rotas de "Stripe"
+router.use("/api", Stripe);
 
 // Adicione outras rotas aqui, se necessário
 // router.use("/api/users", usersRoutes);

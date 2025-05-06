@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/Nilson04C/Travelex#readme",
   "dependencies": {
+    "@stripe/react-stripe-js": "^3.7.0",
+    "@stripe/stripe-js": "^7.3.0",
     "axios": "^1.8.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -32,7 +34,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.4.0"
+    "react-router-dom": "^7.4.0",
+    "stripe": "^18.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
