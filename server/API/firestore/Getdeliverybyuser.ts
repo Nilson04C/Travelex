@@ -1,19 +1,21 @@
 import { Router } from "express";
-import { getDeliverybyUser, getOffer, getFlight } from "../../firestoreService";
+import { getDeliverybyUser, getOffer, getFlight, verifyToken} from "../../firestoreService";
 
 const router = Router();
 
 // Endpoint para buscar entregas por usuário
 router.get("/deliverybyuser", async (req, res) => {
-  const { user } = req.query;
-
-  if (!user) {
-    return res.status(400).json({ error: "Não foi possível confirmar o utilizador" });
+  const token = req.headers.authorization?.split(" ")[1]; // Extrai o token do cabeçalho Authorization
+  if (!token) {
+    return res.status(401).json({ error: "Token não fornecido." });
   }
 
   try {
+    // Valida o token e obtém o UID do usuário
+    const uid = await verifyToken(token);
+    
     // Passo 1: Buscar as entregas do usuário
-    const deliveries = await getDeliverybyUser(user as string);
+    const deliveries = await getDeliverybyUser(uid as string);
 
     if (!deliveries || deliveries.length === 0) {
       return res.status(404).json({ error: "Nenhuma entrega encontrada para o usuário." });
@@ -30,7 +32,7 @@ router.get("/deliverybyuser", async (req, res) => {
 
         const flight = await getFlight(offer.flight); // Busca o voo correspondente
         if (flight === undefined || flight === null) {
-          console.error(`Nenhum voo encontrado para a oferta com ID: ${offer.id}`);
+          console.error(`Nenhum voo encontrado para a oferta com ID: ${offer}`);
           return null; // Ignora entregas sem voo
         }
 

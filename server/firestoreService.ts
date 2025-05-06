@@ -52,7 +52,6 @@ interface Flight {
 }
 
 interface Offer {
-  id: string;
   flight: string;
   user: string;
   user_name: string;
