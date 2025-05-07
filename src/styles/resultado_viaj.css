@@ -1,35 +1,171 @@
+/* src/styles/resultado_viaj.css */
+
+/* Container geral da página */
 .resultado-viaj-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f7f7f7;
-  }
-  
-  h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .traveler-list {
-    list-style: none;
-    padding: 0;
-    width: 90%;
-    max-width: 600px;
-  }
-  
-  .traveler-item {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .traveler-item p {
-    margin: 5px 0;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */ /* Removido altura fixa para permitir scroll */
+  padding: 20px;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.traveler-list {
+  list-style: none;
+  padding: 0;
+  width: 90%;
+  max-width: 600px;
+}
+
+.traveler-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.traveler-item p {
+  margin: 5px 0;
+}
+
+.select-pay-button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 16px;
+  background-color: #5563f7;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.select-pay-button:hover {
+  background-color: #4451c9;
+}
+
+/* overlay que escurece o fundo e ocupa 100% da viewport */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* conteúdo do modal */
+.modal-content {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* botão de fechar (x) */
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #444;
+}
+
+/* formulário interno do modal */
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-label {
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: #333;
+}
+
+.card-element,
+.expiry-field,
+.cvc-field {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #fafafa;
+}
+
+.expiry-cvc-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.expiry-field,
+.cvc-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botão de pagar */
+.pay-button {
+  margin-top: 20px;
+  padding: 12px;
+  background-color:  #4451c9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pay-button:disabled {
+  background-color: #6b75c9;
+  cursor: not-allowed;
+}
+
+.pay-button:hover:not(:disabled) {
+  background-color: #6b75c9;
+}
+
+/* Mensagem de status dentro do modal */
+.payment-status {
+  margin-top: 16px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Loading textual */
+.loading {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  padding: 20px 0;
+}

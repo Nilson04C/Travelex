@@ -7,7 +7,8 @@ import RegistarOferta from "./pages/registarOferta";
 import LoginScreen from './pages/login';
 import Registeruser from './pages/registarUser';
 import MinhasEncomendas from "./pages/MinhasEncomendas";
-import StripeTest from "./pages/stripeTest"; 
+//import StripeTest from "./pages/stripeTest"; 
+//<Route path="/stripeTest" element={<StripeTest />} />
 
 function App() {
   return (
@@ -20,7 +21,6 @@ function App() {
         <Route path="/register" element={<Registeruser />} />
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/minhas_encomendas" element={<MinhasEncomendas />} />
-        <Route path="/stripeTest" element={<StripeTest />} />
       </Routes>
     </Router>
   );
