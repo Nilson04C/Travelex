@@ -1,158 +1,233 @@
 :root {
-    /* Ajusta aqui a largura máxima do container principal (use '100%' para largura total) */
-    --container-max-width: 1200px;
-  }
-  
-  /* Reset global e box-sizing */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  html, body, #root {
-    margin: 0;
-    padding: 0; 
-    width: 100%; /* ocupa toda a largura da tela */
-    overflow-x: hidden; /* Evita overflow horizontal */
-  }
-  
-  /* Container principal da página — padding lateral para espaçamento */
-  .travel-list-page {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    min-height: 100vh;
-  
-    display: flex;
-    flex-direction: column;
-     /* espaço nas laterais da viewport */
-  }
-  
-  /* Header destacado em largura total */
-  .travel-list-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 16px; /* só padding vertical — horizontais ficam no pai */
-    background-color: #e0e0e0;
-    border-bottom: 1px solid #ccc;
-  }
-  .travel-list-logo {
-    height: 50px;
-  }
-  .travel-list-user-icon {
-    width: 32px;
-    height: 32px;
-  }
-  
-  /* Wrapper transparente e centralizado */
-  .travel-list-body {
-    width: 100%;
-    max-width: var(--container-max-width);
-    margin: 24px auto 0 auto;
-    background: transparent;
-    
-  }
-  
-  /* Conteúdo principal que preenche o container */
-  .travel-list-content {
-    display: flex;
-    flex-wrap: wrap; /* Permite que os itens quebrem linha */
-    gap: 24px;
-    align-items: stretch;
-  }
-  
-  /* Estilos gerais de cada cartão */
-  .travel-item {
-    width: calc(33.33% - 16px); /* Ajusta a largura para evitar overflow */
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    padding: 24px;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s;
-    min-height: 120px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
-  .travel-item:hover {
-    background-color: #fafafa;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-  
-  .travel-item-header .route {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 12px;
-  }
-  
-  /* Sumário colapsado */
-  .travel-item-summary .summary-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  .departure-date, .weight {
-    background-color: #f0f0f0;
-    padding: 4px 8px;
-    border-radius: 4px;
-  }
-  
-  /* Detalhes expandidos */
-  .travel-item-details .user-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-  .user-icon {
-    width: 24px;
-    height: 24px;
-  }
-  .user-name {
-    font-size: 14px;
-  }
-  .dates div {
-    font-size: 13px;
-    margin-bottom: 6px;
-  }
-  .details {
-    margin: 16px 0;
-    display: flex;
-    gap: 8px;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: flex-start;
-  }
-  .badge {
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    white-space: nowrap;
-  }
-  .size-badge {
-    background-color: #d0e3ff;
-    color: #1e3a8a;
-  }
-  .weight-badge {
-    background-color: #dfffd0;
-    color: #006400;
-  }
-  .disponibilidade-badge {
-    background-color: #cfe8ff;
-    color: #004080;
-  }
-  
-  .select-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  .travel-item-details[aria-expanded="false"] {
-  }
-  .travel-item-summary[aria-expanded="true"] {
-    display: none;
-  }
+  /* Ajusta aqui a largura máxima do container principal (use '100%' para largura total) */
+  --container-max-width: 1200px;
+}
 
+/* Reset global e box-sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%; /* ocupa toda a largura da tela */
+  overflow-x: hidden; /* Evita overflow horizontal */
+}
+
+/* Container principal da página — padding lateral para espaçamento */
+.travel-list-page {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header destacado em largura total */
+.travel-list-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px; /* só padding vertical — horizontais ficam no pai */
+  background-color: #e0e0e0;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Estilos para a logo da aplicação */
+.travel-list-logo {
+  height: 70px;
+}
+
+/* Estilos para o ícone do usuário */
+.travel-list-user-icon {
+  width: 32px;
+  height: 32px;
+}
+
+/* NOVOS ESTILOS DO HEADER */
+
+/* Agrupa os itens à esquerda (link e dropdown) */
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Agrupa os itens à direita (logo) */
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo para o link que direciona à página principal */
+.home-link {
+  margin-right: 20px;
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.home-link:hover {
+  color: #007BFF;
+}
+
+/* Estilo para o container do dropdown */
+.user-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Estilo para o menu dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px); /* espaço abaixo do ícone do usuário */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  border-radius: 4px;
+  z-index: 100;
+}
+
+/* Estilo para os itens do dropdown */
+.dropdown-item {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Wrapper transparente e centralizado */
+.travel-list-body {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 120px auto 0 auto;
+  background: transparent;
+  
+}
+
+/* Conteúdo principal que preenche o container */
+.travel-list-content {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem linha */
+  gap: 24px;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* Estilos gerais de cada cartão */
+.travel-item {
+  width: calc(33.33% - 16px); /* Ajusta a largura para evitar overflow */
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  min-height: 120px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  justify-content: center;
+}
+
+.travel-item:hover {
+  background-color: #fafafa;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.travel-item-header .route {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+/* Sumário colapsado */
+.travel-item-summary .summary-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.departure-date, .weight {
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* Detalhes expandidos */
+.travel-item-details .user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.user-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.user-name {
+  font-size: 14px;
+}
+
+.dates div {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.details {
+  margin: 16px 0;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.size-badge {
+  background-color: #d0e3ff;
+  color: #1e3a8a;
+}
+
+.weight-badge {
+  background-color: #dfffd0;
+  color: #006400;
+}
+
+.disponibilidade-badge {
+  background-color: #cfe8ff;
+  color: #004080;
+}
+
+.select-button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.travel-item-details[aria-expanded="false"] {
+}
+
+.travel-item-summary[aria-expanded="true"] {
+  display: none;
+}
