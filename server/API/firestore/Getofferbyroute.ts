@@ -8,7 +8,7 @@ router.get("/offerbyroute", async (req, res) => {
   const { origin, destination } = req.query;
 
   if (!origin || !destination) {
-    return res.status(400).json({ error: "Nenhum voo encontrado" });
+    return res.status(400).json({ error: "Destino ou origem em falta" });
   }
 
   try {

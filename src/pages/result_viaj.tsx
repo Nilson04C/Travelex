@@ -100,12 +100,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ clientSecret, offerId, amou
 // Modal component
 interface CheckoutModalProps {
   offerId: string;
+  flightId: string;
+  travelerId: string;
   amount: number;
   currency: string;
   onClose: () => void;
 }
 
-const CheckoutModal: React.FC<CheckoutModalProps> = ({ offerId, amount, currency, onClose }) => {
+const CheckoutModal: React.FC<CheckoutModalProps> = ({ offerId, amount, currency, flightId, travelerId, onClose }) => {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
@@ -115,13 +117,38 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ offerId, amount, currency
       "http://localhost:3000/api/create-payment-intent",
       { offerId, amount, currency }
     )
-    .then(resp => setClientSecret(resp.data.clientSecret))
-    .catch(err => console.error("Erro ao criar PaymentIntent", err))
-    .then(() => setLoading(false));
+      .then(resp => setClientSecret(resp.data.clientSecret))
+      .catch(err => console.error("Erro ao criar PaymentIntent", err))
+      .then(() => setLoading(false));
   }, [offerId, amount, currency]);
 
-  const handleSuccess = () => navigate('/minhas_encomendas');
-  const handleError = (msg: string) => console.error('Payment error:', msg);
+  const handleSuccess = async () => {
+    try {
+
+      // Prepare the delivery data
+      const deliveryData = {
+        offerId,
+        travelerId, // Extracted from the offer
+        content: "Descrição da entrega", // Replace with the actual content
+        flightId, // Extracted from the offer
+        status: "pending", // Initial status of the delivery
+      };
+
+      // Send the request to create the delivery
+      await axios.post("http://localhost:3000/api/setdelivery", deliveryData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Envia o token no cabeçalho
+        },
+      });
+
+      // Redirect to the orders page
+      navigate("/minhas_encomendas");
+    } catch (error) {
+      console.error("Erro ao criar delivery:", error);
+    }
+  };
+
+  const handleError = (msg: string) => console.error("Payment error:", msg);
 
   return (
     <div className="modal-overlay">
@@ -153,7 +180,7 @@ const ResultadoViaj: React.FC = () => {
   const destination = searchParams.get('destination');
   const [offers, setOffers] = useState<Offer[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [activeOffer, setActiveOffer] = useState<{ id: string; amount: number; currency: string } | null>(null);
+  const [activeOffer, setActiveOffer] = useState<{ id: string; amount: number; currency: string; flight: string; traveler: string } | null>(null);
 
   useEffect(() => {
     if (!origin || !destination) return;
@@ -173,13 +200,15 @@ const ResultadoViaj: React.FC = () => {
         {offers.map(o => {
           const amount = o.weight * 1000;
           const currency = 'usd';
+          const flight = o.flight; // Assuming flight is a string
+          const traveler = o.user; // Assuming user is the traveler ID
           return (
             <li key={o.id} className="traveler-item">
               <p><strong>Chegada:</strong> {o.a_date}</p>
               <p><strong>Entregador:</strong> {o.user_name}</p>
               <p><strong>Peso Máximo:</strong> {o.weight} kg</p>
               <p><strong>Espaço Máximo:</strong> {o.space}</p>
-              <button className="select-pay-button" onClick={() => setActiveOffer({ id: o.id, amount, currency })}>
+              <button className="select-pay-button" onClick={() => setActiveOffer({ id: o.id, amount, currency, flight, traveler })}>
                 Selecionar e Pagar
               </button>
             </li>
@@ -190,6 +219,8 @@ const ResultadoViaj: React.FC = () => {
       {activeOffer && (
         <CheckoutModal
           offerId={activeOffer.id}
+          flightId={activeOffer.id}
+          travelerId={activeOffer.traveler}
           amount={activeOffer.amount}
           currency={activeOffer.currency}
           onClose={() => setActiveOffer(null)}

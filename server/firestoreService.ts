@@ -61,7 +61,7 @@ interface Offer {
 
 interface Delivery {
   offer: string;
-  client: number;
+  client: string;
   traveler: number;
   content: string;
   flight: string;
