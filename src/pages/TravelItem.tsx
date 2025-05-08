@@ -6,15 +6,28 @@ import '../styles/TravelList.css';
 interface TravelItemProps {
   item: TravelData;
   userIconSrc: string;
+  isClient: boolean; // Indica se o usuário atual é um cliente
 }
 
-const TravelItem: React.FC<TravelItemProps> = ({ item, userIconSrc }) => {
+const TravelItem: React.FC<TravelItemProps> = ({ item, userIconSrc, isClient }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isActive, setIsActive] = useState(true); // Estado para controlar se a encomenda está ativa
+
   const toggleOpen = () => setIsOpen(prev => !prev);
+
+  const handleMarkAsReceived = () => {
+    // Atualiza o estado para remover a encomenda da interface
+    setIsActive(false);
+  };
+
+  // Não renderiza o item se ele não estiver ativo ou se o usuário não for um cliente
+  if (!isActive || !isClient) {
+    return null; // Não renderiza nada para viajantes
+  }
 
   return (
     <div
-      className={`travel-item ${isOpen ? 'open' : 'collapsed'}`}  
+      className={`travel-item ${isOpen ? 'open' : 'collapsed'}`}
       onClick={toggleOpen}
     >
       <div className="travel-item-header">
@@ -23,17 +36,15 @@ const TravelItem: React.FC<TravelItemProps> = ({ item, userIconSrc }) => {
         </div>
       </div>
 
-      {/* Sumário personalizado quando colapsado: mostra data de partida e peso */}
       {!isOpen && (
         <div className="travel-item-summary">
           <div className="summary-info">
-            <span className="departure-date">Data de partida: {item.departureDate}</span> 
-            <span className="badge weight-badge weight">Peso: {item.space}</span>
+            <span className="departure-date">Data de partida: {item.departureDate}</span>
+            <span className="badge weight-badge weight">{item.weight} g</span>
           </div>
         </div>
       )}
 
-      {/* Detalhes completos quando expandido */}
       {isOpen && (
         <div className="travel-item-details">
           <div className="user-info">
@@ -48,13 +59,18 @@ const TravelItem: React.FC<TravelItemProps> = ({ item, userIconSrc }) => {
 
           <div className="details">
             <span className={`badge size-badge size-${item.space.toLowerCase()}`}>{item.space}</span>
-            <span className="badge weight-badge weight">{item.weight} g </span>
+            <span className="badge weight-badge weight">{item.weight} g</span>
             {item.disponibilidade && (
               <span className="badge disponibilidade-badge">{item.disponibilidade}</span>
             )}
           </div>
 
-          <button className="select-button">Selecionar</button>
+          {/* Exibe o botão apenas para clientes */}
+          {isClient && (
+            <button className="select-button" onClick={handleMarkAsReceived}>
+               Recebida
+            </button>
+          )}
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 // src/components/TravelListPage.tsx
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
+import Header from '../components/Header';
 import TravelItem from './TravelItem';
 import '../styles/TravelList.css';
 
@@ -14,6 +15,7 @@ export interface TravelData {
   space: string;
   weight: string;
   disponibilidade?: string;
+  relacao_encomenda?: string;
 }
 
 // Props esperadas pelo componente
@@ -24,81 +26,23 @@ interface TravelListPageProps {
   userIconSrc?: string;
 }
 
-const logoSrc = 'TEX_2.png'; // URL da logo
-
-// Componente do ícone de perfil, utilizando SVG
-const ProfileIcon: React.FC<{ onClick: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void }> = ({ onClick }) => (
-  <svg
-    onClick={onClick}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    width="32"
-    height="32"
-    className="travel-list-user-icon"
-    style={{ cursor: 'pointer' }}
-  >
-    <circle cx="12" cy="8" r="4" fill="#555" />
-    <path d="M12,14c-5.33,0-8,2.67-8,4v2h16v-2C20,16.67,17.33,14,12,14z" fill="#555"/>
-  </svg>
-);
-
 const TravelListPage: React.FC<TravelListPageProps> = ({ data, userIconSrc }) => {
-  // Estado para controlar a exibição do dropdown
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Alterna o dropdown ao clicar no ícone do usuário
-  const handleUserIconClick = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    e.preventDefault();
-    setDropdownOpen(prev => !prev);
-  };
-
-  // Fecha o dropdown se o clique ocorrer fora dele
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   return (
     <div className="travel-list-page">
-      <header className="travel-list-header">
-        {/* Área da esquerda: logo da aplicação */}
-        <div className="header-left">
-          <img src={logoSrc} alt="Logo da aplicação" className="travel-list-logo" />
-        </div>
-
-        {/* Área da direita: link para a página principal e dropdown do usuário */}
-        <div className="header-right">
-          <a href="/" className="home-link">
-            HOME
-          </a>
-          <div className="user-dropdown" ref={dropdownRef}>
-            <ProfileIcon onClick={handleUserIconClick} />
-            {dropdownOpen && (
-              <div className="dropdown-menu">
-                <a href="/minhas_encomendas" className="dropdown-item">
-                  Minhas Encomendas
-                </a>
-                <a href="/logout" className="dropdown-item">
-                  Logout
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
+      <Header /> {/* Adiciona o header aqui */}
       <div className="travel-list-body">
         <main className="travel-list-content">
           {Array.isArray(data) ? (
-            data.map(item => (
-              <TravelItem key={item.id} item={item} userIconSrc={userIconSrc || ''} />
-            ))
+            data
+              .filter(item => item.relacao_encomenda === 'cliente') // Filtra apenas os itens do cliente
+              .map(item => (
+                <TravelItem
+                  key={item.id}
+                  item={item}
+                  userIconSrc={userIconSrc || ''}
+                  isClient={item.relacao_encomenda === 'cliente'} // Verifica se o usuário é cliente
+                />
+              ))
           ) : (
             <p>Nenhum dado disponível.</p>
           )}

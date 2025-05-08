@@ -5,6 +5,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import "../styles/resultado_viaj.css";
+import Header from '../components/Header';
 
 // Stripe setup
 const stripePromise = loadStripe(
@@ -93,7 +94,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ clientSecret, offerId, amou
       </button>
 
       {status && <p className="payment-status">{status}</p>}
-    </form>
+    </form> 
   );
 };
 
@@ -194,6 +195,9 @@ const ResultadoViaj: React.FC = () => {
   if (loading) return <div className="loading">Carregando...</div>;
 
   return (
+    <div>
+      <Header />
+    <div className="page-content">
     <div className="resultado-viaj-container">
       <h1>Ofertas Encontradas</h1>
       <ul className="traveler-list">
@@ -226,6 +230,8 @@ const ResultadoViaj: React.FC = () => {
           onClose={() => setActiveOffer(null)}
         />
       )}
+    </div>
+    </div>
     </div>
   );
 };

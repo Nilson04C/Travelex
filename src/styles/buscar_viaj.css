@@ -1,0 +1,85 @@
+/* Container principal */
+.travel-search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+/* Formulário */
+.travel-search-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Título do formulário */
+.form-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Descrição do formulário */
+.form-description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Grupo de campos */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Rótulos */
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Campos de seleção */
+.form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+.form-select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Botão */
+.form-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-button:hover {
+  background-color: #0056b3;
+}

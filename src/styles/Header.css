@@ -1,0 +1,105 @@
+/* Header destacado em largura total */
+.travel-list-header {
+  position: fixed; /* Fixa o header no topo da página */
+  top: 0; /* Alinha o header ao topo */
+  left: 0; /* Garante que o header comece na borda esquerda */
+  width: 100%; /* Faz o header ocupar toda a largura da página */
+  z-index: 1000; /* Garante que o header fique acima de outros elementos */
+  background-color: #e0e0e0; /* Cor de fundo para o header */
+  border-bottom: 1px solid #ccc;
+  padding: 12px 16px; /* Padding interno */
+  height: 80px; /* Define a altura do header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilos para a logo da aplicação */
+.travel-list-logo {
+  height: 70px;
+}
+
+/* Estilos para o ícone do usuário */
+.travel-list-user-icon {
+  width: 28px;
+  height: 28px;
+}
+
+/* Agrupa os itens à esquerda (logo e dropdown) */
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Agrupa os itens à direita (ícones e links) */
+.header-right {
+  display: flex;
+  align-items: center; /* Alinha os ícones verticalmente */
+  justify-content: space-between; /* Espaçamento uniforme entre os ícones */
+  gap: 16px; /* Espaçamento entre os ícones */
+}
+
+/* Estilo para o link que direciona à página principal */
+.home-link {
+  margin-right: 20px;
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.home-link:hover {
+  color: #007BFF;
+}
+
+.home-link svg,
+.travel-list-user-icon {
+  width: 28px; /* Certifique-se de que ambos os ícones têm o mesmo tamanho */
+  height: 28px;
+  display: block; /* Garante que o SVG seja tratado como um bloco */
+}
+
+/* Estilo para o container do dropdown */
+.user-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Estilo para o menu dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px); /* espaço abaixo do ícone do usuário */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  border-radius: 4px;
+  z-index: 100;
+}
+
+/* Estilo para os itens do dropdown */
+.dropdown-item {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Estilo para o container de ofertas */
+.offer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: calc(100vh - 80px); /* Garante que o container ocupe pelo menos a altura da janela */
+  background-color: #f9f9f9;
+  padding-top: 80px; /* Compensa a altura do header */
+}
+

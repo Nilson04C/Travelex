@@ -42,8 +42,8 @@ html, body, #root {
 
 /* Estilos para o ícone do usuário */
 .travel-list-user-icon {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
 }
 
 /* NOVOS ESTILOS DO HEADER */
@@ -57,7 +57,9 @@ html, body, #root {
 /* Agrupa os itens à direita (logo) */
 .header-right {
   display: flex;
-  align-items: center;
+  align-items: center; /* Alinha os ícones verticalmente */
+  justify-content: space-between; /* Espaçamento uniforme entre os ícones */
+  gap: 16px; /* Espaçamento entre os ícones */
 }
 
 /* Estilo para o link que direciona à página principal */
@@ -71,6 +73,13 @@ html, body, #root {
 
 .home-link:hover {
   color: #007BFF;
+}
+
+.home-link svg,
+.travel-list-user-icon {
+  width: 28px; /* Certifique-se de que ambos os ícones têm o mesmo tamanho */
+  height: 28px;
+  display: block; /* Garante que o SVG seja tratado como um bloco */
 }
 
 /* Estilo para o container do dropdown */
@@ -112,7 +121,6 @@ html, body, #root {
   max-width: var(--container-max-width);
   margin: 120px auto 0 auto;
   background: transparent;
-  
 }
 
 /* Conteúdo principal que preenche o container */
