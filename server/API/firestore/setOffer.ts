@@ -29,6 +29,7 @@ router.post("/setOffer", async (req, res) => {
       user_name: userData.name, // Usa o nome do usuário
       weight,
       space,
+      state: "active",
     };
 
     const flightData = {

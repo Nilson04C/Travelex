@@ -57,6 +57,7 @@ interface Offer {
   user_name: string;
   weight: number;
   space: string;
+  state: string;
 }
 
 interface Delivery {
@@ -219,11 +220,21 @@ export async function getOffer(offerId: string[]) {
 // Função para adicionar ou atualizar um documento para a interface Delivery
 export async function setDelivery(deliveryData: Delivery) {
   try {
+    // Adiciona o documento de delivery na coleção "delivery"
     const docRef = collection(db, "delivery");
     await addDoc(docRef, deliveryData);
-    console.log('Delivery data set successfully');
+    console.log("Delivery data set successfully");
+
+    // Atualiza o campo "state" do documento "offer" correspondente
+    const offerRef = doc(db, "offer", deliveryData.offer);
+    await setDoc(
+      offerRef,
+      { state: "inactive" }, // Define o novo estado como "inactive"
+      { merge: true } // Garante que apenas o campo "state" será atualizado
+    );
+    console.log(`Offer state updated successfully for offer ID: ${deliveryData.offer}`);
   } catch (e) {
-    console.error('Error setting delivery document: ', e);
+    console.error("Error setting delivery document or updating offer state: ", e);
   }
 }
 
@@ -300,7 +311,8 @@ export async function getOffersByRoute(origin: string, destination: string) {
     // Passo 2: Buscar as offers associadas aos voos encontrados
     const offerQuery = query(
       collection(db, "offer"),
-      where("flight", "in", flightIds) // Filtrar as offers com base nos IDs dos voos
+      where("flight", "in", flightIds), // Filtrar as offers com base nos IDs dos voos
+      where("state", "==", "active") // Filtrar as offers ativas
     );
 
     const offerDocs = await getDocs(offerQuery);
