@@ -34,7 +34,7 @@ const TravelListPage: React.FC<TravelListPageProps> = ({ data, userIconSrc }) =>
         <main className="travel-list-content">
           {Array.isArray(data) ? (
             data
-              .filter(item => item.relacao_encomenda === 'cliente') // Filtra apenas os itens do cliente
+              //.filter(item => item.relacao_encomenda === 'cliente') // Filtra apenas os itens do cliente
               .map(item => (
                 <TravelItem
                   key={item.id}

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getDeliverybyUser, getOffer, getFlight, verifyToken} from "../../firestoreService";
+import { getDeliverybyUser, getOffer, getFlight, verifyToken, getUserRelation} from "../../firestoreService";
 
 const router = Router();
 
@@ -35,6 +35,10 @@ router.get("/deliverybyuser", async (req, res) => {
           console.error(`Nenhum voo encontrado para a oferta com ID: ${offer}`);
           return null; // Ignora entregas sem voo
         }
+        
+
+        // Determina a relação do usuário com a entrega
+        const relacaoEncomenda = getUserRelation(uid, delivery.client, delivery.traveler);
 
         // Retorna apenas os dados necessários para a interface
         return {
@@ -47,6 +51,7 @@ router.get("/deliverybyuser", async (req, res) => {
           space: offer.space,
           weight: offer.weight,
           disponibilidade: delivery.status,
+          relacao_encomenda: relacaoEncomenda, // Adiciona o campo relacao_encomenda
         };
       })
     );

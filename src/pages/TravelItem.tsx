@@ -21,7 +21,7 @@ const TravelItem: React.FC<TravelItemProps> = ({ item, userIconSrc, isClient }) 
   };
 
   // Não renderiza o item se ele não estiver ativo ou se o usuário não for um cliente
-  if (!isActive || !isClient) {
+  if (!isActive) {
     return null; // Não renderiza nada para viajantes
   }
 

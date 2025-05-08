@@ -62,7 +62,7 @@ interface Offer {
 interface Delivery {
   offer: string;
   client: string;
-  traveler: number;
+  traveler: string;
   content: string;
   flight: string;
   status: string;
@@ -72,7 +72,7 @@ interface Transaction {
   id: number;
   amount: number; 
   currency: string;
-  delivery: number;
+  delivery: string;
   status: string;
   time: Date;
 }
@@ -361,6 +361,19 @@ export async function getDeliverybyUser(user: string) {
 
 
 
+export function getUserRelation(userId: string, clientId: string, travelerId: string): string {
+  if (userId === travelerId) {
+    return "viajante";
+  } else if (userId === clientId) {
+    return "cliente";
+  } else {
+    return "unknown"; // Caso o ID do usuário não corresponda a nenhum dos dois
+  }
+}
+
+
+
+
 export async function authenticateUser(email: string, password: string): Promise<string> {
   try {
     // Autentica o usuário usando a Firebase Authentication REST API
@@ -393,10 +406,10 @@ export async function authenticateUser(email: string, password: string): Promise
 export async function verifyToken(token: string): Promise<string> {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-    console.log("Token verificado com sucesso:", decodedToken);
+    console.log("Token verificado com sucesso:");
     return decodedToken.uid; // Retorna o UID do usuário
   } catch (error) {
-    console.error("Erro ao verificar token:", error);
+    console.error("Erro ao verificar token:");
     throw new Error("Token inválido.");
   }
 }
