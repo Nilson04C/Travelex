@@ -12,6 +12,7 @@ const AddOferta: React.FC = () => {
     const [flightDetails, setFlightDetails] = useState<any>(null); // Armazena os dados do voo
     const [errorDetails, setErrorDetails] = useState<string | null>(null); // Armazena erros
     const [isLoading, setIsLoading] = useState<boolean>(false); // Estado para controlar o carregamento
+    const [buttonText, setButtonText] = useState<string>("Publicar Oferta"); // Estado para o texto do botão
     const navigate = useNavigate();
 
 
@@ -94,6 +95,10 @@ const fetchFlightDetails = async () => {
                     dateUTC: flightData.arrivalDateUTC || 'Desconhecido',
                 },
             });
+
+            // Atualiza o texto do botão para "Confirmar Voo"
+            setButtonText("Confirmar Voo");
+
         } else {
             setErrorDetails('Voo não encontrado na data especificada.');
         }
@@ -101,6 +106,9 @@ const fetchFlightDetails = async () => {
         console.error('Erro ao buscar voo:', error);
         setErrorDetails('Erro ao buscar voo. Verifique a conexão ou os parâmetros fornecidos.');
     }
+
+
+
 };
 
     const setOffer = async (event: React.FormEvent) => {
@@ -207,7 +215,7 @@ const fetchFlightDetails = async () => {
                         />
                     </div>
                     <button type="submit" className="form-button" disabled={isLoading}>
-                        {isLoading ? "Carregando..." : "Publicar Oferta"}
+                        {isLoading ? "Carregando..." : buttonText}
                     </button>
                 </form>
 
