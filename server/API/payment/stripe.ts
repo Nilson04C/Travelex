@@ -9,9 +9,13 @@ if (!stripeApiKey) {
   throw new Error("StripeSecretKey is not defined in environment variables");
 }
 
-const router = express.Router();
-const stripe = new Stripe(stripeApiKey, { apiVersion: "2025-04-30.basil" });
+const stripeApiVersion = process.env.StripeApiVersion;
+if (!stripeApiVersion) {
+  throw new Error("StripeApiVersion is not defined in environment variables");
+}
 
+const router = express.Router();
+const stripe = new Stripe(stripeApiKey, { apiVersion: stripeApiVersion as Stripe.LatestApiVersion });
 router.post("/create-payment-intent", async (req, res) => {
   const { amount, currency } = req.body;
 
