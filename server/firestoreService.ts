@@ -373,15 +373,38 @@ export async function getDeliverybyUser(user: string) {
 
 
 
-export function getUserRelation(userId: string, clientId: string, travelerId: string): string {
+export function getUserRelation(userId: string, clientId: string, travelerId: string): string[] {
   if (userId === travelerId) {
-    return "viajante";
+    return ["viajante", clientId];
   } else if (userId === clientId) {
-    return "cliente";
+    return ["cliente", travelerId];
   } else {
-    return "unknown"; // Caso o ID do usuário não corresponda a nenhum dos dois
+    return ["unknown","unknown"]; // Caso o ID do usuário não corresponda a nenhum dos dois
   }
 }
+
+
+// Função para buscar o nome do usuário com base no ID do usuário
+export async function getusername(userId: string){
+  try {
+    console.log(userId);
+    const docRef = doc(db, "user", userId); // Buscar na coleção "user" o documento userId
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const userData = docSnap.data() as User; // Guardar as informações no tipo User
+      console.log("User data:", userData.name);
+      return userData.name; // Retorna o nome do usuário
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  }
+  catch (e) {
+    console.error("Error getting document: ", e);
+    throw new Error("Erro ao buscar os dados do usuário.");
+  }
+};
 
 
 

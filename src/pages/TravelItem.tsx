@@ -24,6 +24,7 @@ interface TravelItemProps {
 }
 
 const TravelItem: React.FC<TravelItemProps> = ({ item, isClient }) => {
+  console.log(item);
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(true); // Se a encomenda está ativa
   const [isLoading, setIsLoading] = useState(false); // Estado de carregamento do botão
@@ -103,7 +104,7 @@ const TravelItem: React.FC<TravelItemProps> = ({ item, isClient }) => {
           <div className="travel-item-details">
             <div className="user-info">
               <FaUserCircle className="user-icone" /> {/* Substitui a imagem pelo ícone */}
-              <span className="user-name">{item.client}</span>
+              <span className="user-name">{item.name}</span>
             </div>
             <div className="dates">
               <div>Data de partida: {formatDate(item.departureDate)}</div>

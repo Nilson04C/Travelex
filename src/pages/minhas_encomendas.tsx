@@ -9,7 +9,7 @@ export interface TravelData {
   id: string;
   origin: string;
   destination: string;
-  client: string;
+  name: string;
   departureDate?: string;
   arrivalDate?: string;
   space: string;

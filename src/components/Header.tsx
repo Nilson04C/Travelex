@@ -78,7 +78,13 @@ const Header: React.FC = () => {
               <a href="/minhas_encomendas" className="dropdown-item">
                 Minhas Encomendas
               </a>
-              <button className="dropdown-item logout-button" onClick={() => navigate("/login")}>
+              <button
+                className="dropdown-item logout-button"
+                onClick={() => {
+                  localStorage.removeItem("token"); // Remove o token do localStorage
+                  navigate("/login"); // Redireciona para a página de login
+                }}
+              >
                 Logout
               </button>
             </div>

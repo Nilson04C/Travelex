@@ -28,7 +28,7 @@ router.post("/setdelivery", async (req, res) => {
       flight: flightId,
       status,
     };
-
+    console.log("Dados da delivery:", deliveryData);
     // Salva a delivery no Firestore
     await setDelivery(deliveryData);
     res.status(201).json({ message: "Delivery criada com sucesso!" });

@@ -116,7 +116,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ offerId, amount, currency
   useEffect(() => {
     axios.post<{ clientSecret: string }>(
       "http://localhost:3000/api/create-payment-intent",
-      { offerId, amount, currency }
+      {amount, currency }
     )
       .then(resp => setClientSecret(resp.data.clientSecret))
       .catch(err => console.error("Erro ao criar PaymentIntent", err))
@@ -134,6 +134,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ offerId, amount, currency
         flightId, // Extracted from the offer
         status: "pending", // Initial status of the delivery
       };
+
+      console.log("Delivery data:", deliveryData);
 
       // Send the request to create the delivery
       await axios.post("http://localhost:3000/api/setdelivery", deliveryData, {
@@ -223,7 +225,7 @@ const ResultadoViaj: React.FC = () => {
       {activeOffer && (
         <CheckoutModal
           offerId={activeOffer.id}
-          flightId={activeOffer.id}
+          flightId={activeOffer.flight}
           travelerId={activeOffer.traveler}
           amount={activeOffer.amount}
           currency={activeOffer.currency}

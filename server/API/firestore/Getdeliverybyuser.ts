@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getDeliverybyUser, getOffer, getFlight, verifyToken, getUserRelation} from "../../firestoreService";
+import { getDeliverybyUser, getOffer, getFlight, verifyToken, getUserRelation, getusername} from "../../firestoreService";
 
 const router = Router();
 
@@ -38,20 +38,23 @@ router.get("/deliverybyuser", async (req, res) => {
         
 
         // Determina a relação do usuário com a entrega
-        const relacaoEncomenda = getUserRelation(uid, delivery.client, delivery.traveler);
+        const relacaoEncomenda: string[] = getUserRelation(uid, delivery.client, delivery.traveler);
+
+        const name = await getusername(relacaoEncomenda[1]); // Busca o nome do cliente 
+        
 
         // Retorna apenas os dados necessários para a interface
         return {
           id: delivery.id,
           origin: flight.origin,
           destination: flight.destination,
-          client: delivery.client,
+          name: name,
           departureDate: flight.departureDate,
           arrivalDate: flight.arrivalDate,
           space: offer.space,
           weight: offer.weight,
           disponibilidade: delivery.status,
-          relacao_encomenda: relacaoEncomenda, // Adiciona o campo relacao_encomenda
+          relacao_encomenda: relacaoEncomenda[0], // Adiciona o campo relacao_encomenda
         };
       })
     );
