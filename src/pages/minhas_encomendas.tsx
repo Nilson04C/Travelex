@@ -26,7 +26,7 @@ interface TravelListPageProps {
   userIconSrc?: string;
 }
 
-const TravelListPage: React.FC<TravelListPageProps> = ({ data, userIconSrc }) => {
+const TravelListPage: React.FC<TravelListPageProps> = ({ data }) => {
   return (
     <div className="travel-list-page">
       <Header /> {/* Adiciona o header aqui */}
@@ -39,7 +39,6 @@ const TravelListPage: React.FC<TravelListPageProps> = ({ data, userIconSrc }) =>
                 <TravelItem
                   key={item.id}
                   item={item}
-                  userIconSrc={userIconSrc || ''}
                   isClient={item.relacao_encomenda === 'cliente'} // Verifica se o usuário é cliente
                 />
               ))

@@ -1,12 +1,22 @@
 .offer-container {
   display: flex;
-  flex-direction: column; /* Alinha os elementos verticalmente */
-  justify-content: flex-start; /* Começa logo abaixo do header */
+  flex-direction: column; /* Alinha os elementos verticalmente por padrão */
+  justify-content: flex-start;
   align-items: center;
-  min-height: 100vh; /* Garante que o container ocupe pelo menos a altura da janela */
-  background-color: #f9f9f9; /* Fundo claro */
-  padding-top: 60px; /* Compensa a altura do header */
-  box-sizing: border-box; /* Inclui padding no cálculo do tamanho total */
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding-top: 60px;
+  box-sizing: border-box;
+}
+
+.offer-content {
+  display: flex;
+  flex-direction: row; /* Alinha o formulário e os detalhes lado a lado */
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 900px; /* Limita a largura máxima */
+  gap: 10px; /* Espaçamento entre o formulário e os detalhes */
 }
 
 .offer-form {
@@ -61,7 +71,8 @@
 }
 
 .flight-details {
-  margin-top: 20px; /* Espaçamento entre o formulário e os detalhes */
+    flex: 1; /* Faz os detalhes ocuparem o espaço restante */
+  margin-top: 100px; /* Remove o espaçamento superior */
   padding: 20px;
   background: #f1f1f1;
   border-radius: 8px;

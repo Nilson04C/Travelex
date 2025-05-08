@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 //import '../styles/TravelList.css';
 import '../styles/Header.css';
+import { useNavigate } from "react-router-dom";
 
 const logoSrc = 'TEX_2.png'; // URL da logo
 
@@ -57,6 +58,7 @@ const Header: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const navigate = useNavigate();
   return (
     <header className="travel-list-header">
       {/* Área da esquerda: logo da aplicação */}
@@ -76,9 +78,9 @@ const Header: React.FC = () => {
               <a href="/minhas_encomendas" className="dropdown-item">
                 Minhas Encomendas
               </a>
-              <a href="/logout" className="dropdown-item">
+              <button className="dropdown-item logout-button" onClick={() => navigate("/login")}>
                 Logout
-              </a>
+              </button>
             </div>
           )}
         </div>

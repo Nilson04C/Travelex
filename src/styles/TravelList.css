@@ -179,9 +179,10 @@ html, body, #root {
   margin-bottom: 16px;
 }
 
-.user-icon {
-  width: 24px;
-  height: 24px;
+.user-icone {
+  font-size: 25px; /* Tamanho do ícone */
+  color: #b7babd; /* Cor do ícone */
+  margin-right: 8px; /* Espaçamento entre o ícone e o nome */
 }
 
 .user-name {
@@ -224,13 +225,24 @@ html, body, #root {
 }
 
 .select-button {
-  background-color: #000;
-  color: #fff;
+  background-color: #007bff;
+  color: #ffffff;
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.select-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05); /* Aumenta ligeiramente no hover */
+}
+
+.select-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
 .travel-item-details[aria-expanded="false"] {
@@ -238,4 +250,43 @@ html, body, #root {
 
 .travel-item-summary[aria-expanded="true"] {
   display: none;
+}
+
+.relation-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px; /* Espaçamento entre o texto e o botão */
+}
+
+.status-text {
+  font-size: 14px;
+  color: #666;
+  font-weight: bold;
+}
+
+.flight-details {
+  flex: 1.5; /* Faz o contêiner ocupar mais espaço */
+  max-width: 500px; /* Limita a largura máxima */
+  padding: 30px; /* Aumenta o espaçamento interno */
+  background: linear-gradient(135deg, #e6f7ff, #ffffff);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.flight-details h3 {
+  font-size: 22px; /* Aumenta o tamanho do título */
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.flight-details p {
+  font-size: 16px; /* Aumenta o tamanho do texto */
+  margin: 10px 0; /* Adiciona mais espaçamento entre os parágrafos */
+}
+
+.flight-details p strong {
+  color: #007bff; /* Destaque para os títulos */
+  font-weight: bold;
 }

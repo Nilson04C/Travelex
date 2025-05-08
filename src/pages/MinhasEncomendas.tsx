@@ -59,7 +59,7 @@ const MinhasEncomendas: React.FC = () => {
     fetchTravelData();
   }, [navigate]);
 
-  return <TravelListPage data={travelData} userIconSrc="icon_perfil.jpg" />;
+  return <TravelListPage data={travelData} />;
 };
 
 export default MinhasEncomendas;

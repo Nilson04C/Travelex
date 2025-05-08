@@ -38,15 +38,15 @@ const TravelSearch: React.FC = () => {
               <option value="">Selecione o país de Origem</option>
               <option value="LAD">Angola - Luanda</option>
               <option value="LIS">Portugal - Lisboa</option>
-              <option value="POR">Portugal - Porto</option>
-              <option value="CT">África do Sul - Cidade do Cabo</option>
-              <option value="PRT">África do Sul - Pretoria</option>
-              <option value="SP">Brasil - São Paulo</option>
-              <option value="RJ">Brasil - Rio de Janeiro</option>
+              <option value="OPO">Portugal - Porto</option>
+              <option value="CPT">África do Sul - Cidade do Cabo</option>
+              <option value="PRW">África do Sul - Pretoria</option>
+              <option value="GRU">Brasil - São Paulo</option>
+              <option value="GIG">Brasil - Rio de Janeiro</option>
               <option value="ORY">França - Paris</option>
-              <option value="MAD">Espanha - Madrid</option>
-              <option value="LON">Reino Unido - Londres</option>
-              <option value="XG">China - Xangai</option>
+              <option value="BCN">Espanha - Madrid</option>
+              <option value="GTW">Reino Unido - Londres</option>
+              <option value="PVG">China - Xangai</option>
             </select>
           </div>
           <div className="form-group">

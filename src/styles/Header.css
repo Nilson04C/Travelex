@@ -92,6 +92,27 @@
   background-color: #f0f0f0;
 }
 
+/* Estilo para o botão de logout */
+.logout-button {
+  display: block;
+  padding: 10px 15px;
+  color: #333; /* Cor do texto */
+  text-decoration: none; /* Remove o sublinhado */
+  font-size: 14px;
+  background: none; /* Remove o fundo padrão do botão */
+  border: none; /* Remove a borda padrão do botão */
+  text-align: center; /* Alinha o texto à esquerda */
+  cursor: pointer; /* Mostra o cursor de clique */
+  width: 100%; /* Garante que o botão ocupe a largura do dropdown */
+  transition: background-color 0.3s; /* Adiciona transição no hover */
+  border-radius: 0;
+}
+
+.logout-button:hover {
+  background-color: #f0f0f0; /* Cor de fundo no hover */
+  color: #007BFF;
+}
+
 /* Estilo para o container de ofertas */
 .offer-container {
   display: flex;

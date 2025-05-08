@@ -28,7 +28,7 @@ export default function HomeScreen() {
               className="home-button home-button-secondary"
               onClick={() => navigate("/buscar_viaj")}
             >
-              <FaBox className="home-button-icon" /> Receber Encomenda
+              <FaBox className="home-button-icon" /> Entregar Encomenda
             </button>
           </div>
         </div>

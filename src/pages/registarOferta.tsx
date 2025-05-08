@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
 import '../styles/registarOferta.css'; // Importando o CSS para estilização
+import { FaPlane, FaMapMarkerAlt } from 'react-icons/fa'; // Importando ícones
 
 const AddOferta: React.FC = () => {
     const [flightNumber, setFlightNumber] = useState<string>('');
@@ -164,72 +165,74 @@ const fetchFlightDetails = async () => {
         <div>
             <Header />
             <div className="offer-container">
-                <form onSubmit={setOffer} className="offer-form">
-                    <h1 className="form-title">Registar Oferta</h1>
-                    <div className="form-group">
-                        <label htmlFor="flightNumber">Número do Voo</label>
-                        <input
-                            type="text"
-                            id="flightNumber"
-                            value={flightNumber}
-                            onChange={(e) => setFlightNumber(e.target.value)}
-                            required
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="weight">Peso Disponível (kg)</label>
-                        <input
-                            type="number"
-                            id="weight"
-                            value={weight}
-                            onChange={(e) => setWeight(Number(e.target.value))}
-                            required
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="space">Espaço Disponível</label>
-                        <select
-                            id="space"
-                            value={space}
-                            onChange={(e) => setSpace(e.target.value)}
-                            required
-                            className="form-select"
-                        >
-                            <option value="">Selecione</option>
-                            <option value="small">Pequeno</option>
-                            <option value="medium">Médio</option>
-                            <option value="large">Grande</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="date">Data do Voo</label>
-                        <input
-                            type="date"
-                            id="date"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                            required
-                            className="form-input"
-                        />
-                    </div>
-                    <button type="submit" className="form-button" disabled={isLoading}>
-                        {isLoading ? "Carregando..." : buttonText}
-                    </button>
-                </form>
+                <div className="offer-content">
+                    <form onSubmit={setOffer} className="offer-form">
+                        <h1 className="form-title">Registar Oferta</h1>
+                        <div className="form-group">
+                            <label htmlFor="flightNumber">Número do Voo</label>
+                            <input
+                                type="text"
+                                id="flightNumber"
+                                value={flightNumber}
+                                onChange={(e) => setFlightNumber(e.target.value)}
+                                required
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="weight">Peso Disponível (kg)</label>
+                            <input
+                                type="number"
+                                id="weight"
+                                value={weight}
+                                onChange={(e) => setWeight(Number(e.target.value))}
+                                required
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="space">Espaço Disponível</label>
+                            <select
+                                id="space"
+                                value={space}
+                                onChange={(e) => setSpace(e.target.value)}
+                                required
+                                className="form-select"
+                            >
+                                <option value="">Selecione</option>
+                                <option value="small">Pequeno</option>
+                                <option value="medium">Médio</option>
+                                <option value="large">Grande</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="date">Data do Voo</label>
+                            <input
+                                type="date"
+                                id="date"
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                required
+                                className="form-input"
+                            />
+                        </div>
+                        <button type="submit" className="form-button" disabled={isLoading}>
+                            {isLoading ? "Carregando..." : buttonText}
+                        </button>
+                    </form>
 
-                {/* Detalhes do voo exibidos abaixo do formulário */}
-                {flightDetails && (
-                    <div className="flight-details">
-                        <h3>Detalhes do Voo</h3>
-                        <p><strong>Companhia Aérea:</strong> {flightDetails.airline}</p>
-                        <p><strong>Origem:</strong> {flightDetails.origin.airport}, Timezone: {flightDetails.origin.timezone}</p>
-                        <p><strong>Destino:</strong> {flightDetails.destination.airport}, Timezone: {flightDetails.destination.timezone}</p>
-                    </div>
-                )}
+                    {/* Detalhes do voo exibidos ao lado do formulário */}
+                    {flightDetails && (
+                        <div className="flight-details">
+                            <h3>Detalhes do Voo</h3>
+                            <p><FaPlane /> <strong>Companhia Aérea:</strong> {flightDetails.airline}</p>
+                            <p><FaMapMarkerAlt /> <strong>Origem:</strong> {flightDetails.origin.airport}</p>
+                            <p><FaMapMarkerAlt /> <strong>Destino:</strong> {flightDetails.destination.airport}</p>
+                        </div>
+                    )}
+                </div>
 
-                {/* Mensagem de erro exibida abaixo do formulário */}
+                {/* Mensagem de erro exibida abaixo */}
                 {errorDetails && <p className="error-message">{errorDetails}</p>}
             </div>
         </div>
